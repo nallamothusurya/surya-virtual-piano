@@ -34,15 +34,14 @@ pianoKeys.forEach(keyData => {
     if (isBlackKey) {
         key.classList.add("black-key");
         key.style.left = `${whiteKeyIndex * 60 - 20}px`;
-        key.dataset.freq = keyData.freq;
-        key.innerText = keyData.name;
     } else {
         key.classList.add("white-key");
         key.style.left = `${whiteKeyIndex * 60}px`;
         whiteKeyIndex++;
-        key.dataset.freq = keyData.freq;
-        key.innerText = keyData.name;
     }
+
+    key.dataset.freq = keyData.freq;
+    key.innerText = `${keyData.name}\n${keyData.freq}Hz`;
 
     // Add event listeners for touch and mouse interaction
     key.addEventListener("mousedown", () => playNote(keyData.freq, key));
