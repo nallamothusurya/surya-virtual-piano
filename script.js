@@ -43,21 +43,20 @@ pianoKeys.forEach(keyData => {
     key.dataset.freq = keyData.freq;
     key.innerText = `${keyData.name}\n${keyData.freq}Hz`;
 
-    // Add event listeners for touch events (mobile support)
-    key.addEventListener("touchstart", (event) => {
-        event.preventDefault(); // Prevent default touch behavior
+    // Add event listeners for touch interaction
+    key.addEventListener("touchstart", (e) => {
+        e.preventDefault();
         playNote(keyData.freq, key);
     });
-    key.addEventListener("touchend", () => {
+
+    key.addEventListener("touchend", (e) => {
+        e.preventDefault();
         stopNote(key);
     });
 
-    key.addEventListener("mousedown", () => {
-        playNote(keyData.freq, key);
-    });
-    key.addEventListener("mouseup", () => {
-        stopNote(key);
-    });
+    // Add mouse event listeners for desktop interaction
+    key.addEventListener("mouseenter", () => playNote(keyData.freq, key));
+    key.addEventListener("mouseleave", () => stopNote(key));
 
     piano.appendChild(key);
 });
