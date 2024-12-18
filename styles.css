@@ -51,9 +51,9 @@ button:hover {
     display: flex;
     position: relative;
     height: 200px;
-    width: 100%;
+    width: 5280px;
     border: 2px solid black;
-}
+  }
   
   .white-key {
     position: absolute;
