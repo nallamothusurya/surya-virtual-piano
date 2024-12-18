@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Keyboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>88 Key Virtual Piano</h1>
+    <div class="piano-container">
+        <div id="piano"></div>   
+    </div>
+    <br>
+    <form id="song-input">
+        <input type="text" id="song-input-field" placeholder="Enter notes (e.g., E4 E5 E6 E7)">
+        <button type="submit">Play Song</button>
+    </form>
+    <br>
+    <button id="demo-song-btn">Play Demo Song</button>
+    <br><br>
+    <label for="speed">Song Speed:</label>
+    <input type="range" id="speed" name="speed" min="100" max="1000" value="500">
+    <span id="speed-value">500ms</span>
+   
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.8.43/build/Tone.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
