@@ -1,3 +1,9 @@
+// Initialize Tone.js Synth
+const synth = new Tone.Synth().toDestination();
+
+// Piano container
+const piano = document.getElementById("piano");
+
 // Key names and frequencies for all 88 piano keys (A0 to C8) based on Casio piano
 const pianoKeys = [
     { name: "A0", freq: 27.50 }, { name: "A#0", freq: 29.14 }, { name: "B0", freq: 30.87 },
@@ -16,21 +22,16 @@ const pianoKeys = [
     { name: "C7", freq: 2093.00 }, { name: "C#7", freq: 2217.46 }, { name: "D7", freq: 2349.32 }, { name: "D#7", freq: 2489.02 }, { name: "E7", freq: 2637.02 }, { name: "F7", freq: 2793.83 }, { name: "F#7", freq: 2959.96 }, { name: "G7", freq: 3135.96 }, { name: "G#7", freq: 3322.44 },
     { name: "A7", freq: 3520.00 }, { name: "A#7", freq: 3729.31 }, { name: "B7", freq: 3951.07 },
     { name: "C8", freq: 4186.01 }
+
 ];
 
-// Initialize Tone.js Synth
-const synth = new Tone.Synth().toDestination();
-
-// Piano container
-const piano = document.getElementById("piano");
-
-// Generate the keys dynamically
+// Generate the piano keys dynamically
 let whiteKeyIndex = 0;
-
-pianoKeys.forEach((keyData, index) => {
+pianoKeys.forEach(keyData => {
     const key = document.createElement("div");
     const isBlackKey = keyData.name.includes("#");
 
+    // Style the keys
     if (isBlackKey) {
         key.classList.add("black-key");
         key.style.left = `${whiteKeyIndex * 60 - 20}px`;
@@ -41,82 +42,62 @@ pianoKeys.forEach((keyData, index) => {
     }
 
     key.dataset.freq = keyData.freq;
-    key.innerText = `${keyData.name}\n${keyData.freq}Hz`; // Display key name and frequency
+    key.innerText = `${keyData.name}\n${keyData.freq}Hz`;
 
-    key.addEventListener("mousedown", () => playNote(keyData.freq, key));
-    key.addEventListener("mouseup", () => stopNote(key));
+    // Add event listeners for hover interaction
+    key.addEventListener("mouseenter", () => playNote(keyData.freq, key));
     key.addEventListener("mouseleave", () => stopNote(key));
 
     piano.appendChild(key);
 });
 
-// Play Note
+// Function to play a note
 function playNote(freq, key) {
-    synth.triggerAttack(freq);
+    if (Tone.context.state !== 'running') Tone.start();
+    synth.triggerAttack(freq); // Start the note
     key.classList.add("pressed");
 }
 
-// Stop Note
+// Function to stop a note
 function stopNote(key) {
-    synth.triggerRelease();
+    synth.triggerRelease(); // Stop the note
     key.classList.remove("pressed");
 }
 
-// Function to play a song from a string of notes
-let playing = false;
-let interval;
-
+// Function to play a song with adjustable speed
 function playSong(notes) {
-    let noteIndex = 0;
-    const speed = parseInt(document.getElementById("speed").value);
-    const speedValue = document.getElementById("speed-value");
-    speedValue.textContent = `${speed}ms`;
+    const speed = parseInt(document.getElementById("speed").value, 10) || 300; // Default speed
+    const noteArray = notes.split(/\s+/);
 
-    if (playing) {
-        clearInterval(interval);
-        document.getElementById("demo-song-btn").textContent = "Play Demo Song";
-        playing = false;
-        return;
-    }
-
-    playing = true;
-    document.getElementById("demo-song-btn").textContent = "Stop Song";
-
-    interval = setInterval(() => {
-        if (noteIndex >= notes.length) {
-            clearInterval(interval);
-            playing = false;
-            document.getElementById("demo-song-btn").textContent = "Play Demo Song";
-            return;
-        }
-
-        const note = notes[noteIndex];
+    let currentTime = Tone.now();
+    noteArray.forEach(note => {
         const key = pianoKeys.find(k => k.name === note);
-        if (key) {
-            playNote(key.freq, document.querySelector(`[data-freq="${key.freq}"]`));
-        }
+        const noteFreq = key ? key.freq : pianoKeys.find(k => k.name === "G4").freq; // Default to G4
 
-        noteIndex++;
-    }, speed);
+        synth.triggerAttackRelease(noteFreq, "8n", currentTime); // Play the note
+        currentTime += speed / 1000; // Add delay for next note
+    });
 }
 
-// Demo song example (simple melody)
-const demoSong = [
-    "C4", "C4", "G4", "G4", "A4", "A4", "G4",
-    "F4", "F4", "E4", "E4", "D4", "D4", "C4",
-    "G4", "G4", "F4", "F4", "E4", "E4", "D4",
-    "G4", "G4", "F4", "F4", "E4", "E4", "D4",
-    "C4", "C4", "G4", "G4", "A4", "A4", "G4",
-    "F4", "F4", "E4", "E4", "D4", "D4", "C4"
-];
+// Add user interaction to start Tone.js
+document.body.addEventListener("click", () => {
+    if (Tone.context.state !== 'running') Tone.start();
+});
 
-// Add event listener for demo song button
-document.getElementById("demo-song-btn").addEventListener("click", () => playSong(demoSong));
-
-// Event listener for input submit
+// Form submission to play custom song
 document.getElementById("song-input").addEventListener("submit", (event) => {
     event.preventDefault();
     const input = document.getElementById("song-input-field").value.trim();
-    const notes = input.split(" ").map(note => note.trim());
-    playSong(notes);
+    playSong(input);
+});
+
+// Play demo song
+document.getElementById("demo-song-btn").addEventListener("click", () => {
+    const demoSong = [
+        "C4", "C4", "D4", "C4", "F4", "E4", // "Happy Birthday to you"
+        "C4", "C4", "D4", "C4", "G4", "F4", // "Happy Birthday to you"
+        "C4", "C4", "C5", "A4", "F4", "E4", "D4", // "Happy Birthday dear Surya"
+        "A#4", "A#4", "A4", "F4", "G4", "F4" // "Happy Birthday to you"
+    ].join(" ");
+    playSong(demoSong);
 });
