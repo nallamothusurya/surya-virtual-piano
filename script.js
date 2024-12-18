@@ -47,6 +47,9 @@ pianoKeys.forEach(keyData => {
     key.addEventListener("mouseenter", () => playNote(keyData.freq, key));
     key.addEventListener("mouseleave", () => stopNote(key));
 
+    key.addEventListener("mousedown", () => playNote(keyData.freq, key));
+    key.addEventListener("mouseup", () => stopNote(key));
+
     piano.appendChild(key);
 });
 
