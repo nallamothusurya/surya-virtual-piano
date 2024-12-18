@@ -22,7 +22,6 @@ const pianoKeys = [
     { name: "C7", freq: 2093.00 }, { name: "C#7", freq: 2217.46 }, { name: "D7", freq: 2349.32 }, { name: "D#7", freq: 2489.02 }, { name: "E7", freq: 2637.02 }, { name: "F7", freq: 2793.83 }, { name: "F#7", freq: 2959.96 }, { name: "G7", freq: 3135.96 }, { name: "G#7", freq: 3322.44 },
     { name: "A7", freq: 3520.00 }, { name: "A#7", freq: 3729.31 }, { name: "B7", freq: 3951.07 },
     { name: "C8", freq: 4186.01 }
-
 ];
 
 // Generate the piano keys dynamically
