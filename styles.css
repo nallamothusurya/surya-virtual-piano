@@ -1,106 +1,133 @@
-
 /* General Styling */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #111;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
 
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
-  
-  h1 {
-    margin-bottom: 20px;
-    font-size: 2em;
-    text-align: center;
-  }
-  
-  .piano-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    overflow-x: auto;
-    width: 95vw;
-    max-width: 1800px;
-    background: linear-gradient(to right, #2977ff, #51ff32);
-    padding: 10px;
-    border-radius: 10px;
-  }
-  
-  /* Piano Key Styling */
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.piano-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: auto;
+  width: 95vw;
+  max-width: 1800px;
+  background: linear-gradient(to right, #2977ff, #51ff32);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Piano Key Styling */
+#piano {
+  display: flex;
+  position: relative;
+  height: 200px;
+  width: 5280px;
+  border: 2px solid black;
+}
+
+.white-key {
+  position: absolute;
+  width: 60px;
+  height: 200px;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 300px;
+  font-size: 12px;
+  color: #333;
+  transition: transform 0.1s, background-color 0.1s;
+  user-select: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.black-key {
+  position: absolute;
+  width: 40px;
+  height: 120px;
+  background: #000;
+  z-index: 1;
+  margin-left: -20px;
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+  line-height: 150px;
+  transition: transform 0.1s, background-color 0.1s;
+  user-select: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.white-key.pressed {
+  background-color: #ddd;
+  transform: scaleY(0.97);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.black-key.pressed {
+  background-color: #444;
+  transform: scaleY(0.97);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile Landscape Adjustments */
+@media screen and (max-width: 768px) and (orientation: landscape) {
   #piano {
-    display: flex;
-    position: relative;
-    height: 200px;
-    width: 5280px;
-    border: 2px solid black;
+      height: 150px;
+      width: 300vw;
   }
-  
+
   .white-key {
-    position: absolute;
-    width: 60px;
-    height: 200px;
-    background: #fff;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    text-align: center;
-    line-height: 300px;
-    font-size: 12px;
-    color: #333;
-    transition: transform 0.1s, background-color 0.1s;
-    user-select: none;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 40px;
+      height: 150px;
+      font-size: 10px;
+      line-height: 200px;
   }
-  
+
   .black-key {
-    position: absolute;
-    width: 40px;
-    height: 120px;
-    background: #000;
-    z-index: 1;
-    margin-left: -20px;
-    color: #fff;
-    font-size: 10px;
-    text-align: center;
-    line-height: 150px;
-    transition: transform 0.1s, background-color 0.1s;
-    user-select: none;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 30px;
+      height: 90px;
+      margin-left: -15px;
+      font-size: 8px;
+      line-height: 100px;
   }
-  
-  .white-key.pressed {
-    background-color: #ddd;
-    transform: scaleY(0.97);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+
+  .piano-container {
+      padding: 5px;
+      max-width: 95vw;
   }
-  
-  .black-key.pressed {
-    background-color: #444;
-    transform: scaleY(0.97);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  }
-  
+}
+
   /* Positioning of black keys */
   #piano .black-key:nth-child(1) {
     left: 60px;
