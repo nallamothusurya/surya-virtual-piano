@@ -103,27 +103,47 @@ h1 {
 
 /* Mobile Landscape Adjustments */
 @media screen and (max-width: 768px) and (orientation: landscape) {
-  /* Hide all elements except the piano and its container */
+  /* Hide all elements except the piano container */
   body > *:not(.piano-container) {
     display: none;
   }
 
+  /* Center the piano container */
   body {
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure full height for centering */
+  }
+
+  .piano-container {
+    padding: 8px;
+    max-width: 95vw;
+    display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .piano-container {
-    padding: 20px;
-    max-width: 100vw;
-  }
-
   #piano {
-    height: 200px;
-    width: 200vw;
+    height: 150px;
+    width: 300vw;
   }
 
+  .white-key {
+    width: 60px;
+    height: 150px;
+    font-size: 10px;
+    line-height: 230px;
+  }
+
+  .black-key {
+    width: 40px;
+    height: 100px;
+    margin-left: -20px;
+    font-size: 8px;
+    line-height: 100px;
+  }
 }
+
 
 
   /* Positioning of black keys */
